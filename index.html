@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>감염병 쇼츠 만들기 수행평가 포트폴리오</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony Neutrals -->
+    <!-- Application Structure Plan: A multi-section, single-page application designed for a linear user flow. It starts with user identification, moves to a tabbed interface for the detailed personal portfolio to reduce cognitive load, then presents an interactive card-based system for peer evaluation using sliders for engagement. It concludes with a summary and a Chart.js visualization of the evaluation data. This structure was chosen to transform a static form into a guided, interactive, and less intimidating experience for students. -->
+    <!-- Visualization & Content Choices: Report Info: Personal portfolio questions -> Goal: Organize/Collect -> Presentation: Tabbed text areas -> Interaction: Click to reveal -> Justification: Breaks down a long form. | Report Info: Peer evaluation criteria -> Goal: Compare/Rate -> Presentation: Interactive cards with sliders -> Interaction: Add teammates, drag sliders -> Justification: More engaging than a static table. | Report Info: Peer evaluation scores -> Goal: Summarize -> Presentation: Bar Chart -> Interaction: View on submit -> Justification: Provides instant data visualization feedback. Library: Chart.js. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-btn.active {
+            border-color: #0d9488;
+            background-color: #f0fdfa;
+            color: #134e4a;
+            font-weight: 700;
+        }
+        .slider-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #0d9488;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-teal-800">감염병 쇼츠 만들기 수행평가</h1>
+            <p class="mt-2 text-stone-600">개인 포트폴리오 및 동료 평가서</p>
+        </header>
+
+        <main>
+            <!-- Section 1: Student Info -->
+            <section id="student-info" class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-bold text-teal-700 mb-4">📝 학생 정보</h2>
+                <p class="text-stone-600 mb-6">수행평가 작성을 위해 본인의 정보를 입력해 주세요. 이 정보는 제출 시 함께 기록됩니다.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label for="student-name" class="block text-sm font-medium text-stone-700 mb-1">이름</label>
+                        <input type="text" id="student-name" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500">
+                    </div>
+                    <div>
+                        <label for="team-name" class="block text-sm font-medium text-stone-700 mb-1">팀명</label>
+                        <input type="text" id="team-name" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500">
+                    </div>
+                    <div>
+                        <label for="student-role" class="block text-sm font-medium text-stone-700 mb-1">담당 역할</label>
+                        <input type="text" id="student-role" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="예: 기획, 촬영, 편집 등">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Personal Portfolio -->
+            <section id="personal-portfolio" class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-bold text-teal-700 mb-4">1. 개인 포트폴리오</h2>
+                <p class="text-stone-600 mb-6">이 수행평가를 통해 보건간호 지식을 활용하여 감염병 예방 활동에 기여한 경험을 아래 탭을 눌러 단계별로 작성해 주세요.</p>
+                <div class="border-b border-stone-200 mb-6">
+                    <nav class="flex space-x-2" aria-label="Tabs">
+                        <button class="tab-btn active" data-tab="planning">기획 단계</button>
+                        <button class="tab-btn" data-tab="production">제작 단계</button>
+                        <button class="tab-btn" data-tab="reflection">성찰 단계</button>
+                    </nav>
+                </div>
+                <div>
+                    <div id="planning" class="tab-content active">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-lg font-semibold text-stone-800">아이디어 및 시나리오 구상</label>
+                                <p class="text-sm text-stone-500 mb-2">우리 팀의 쇼츠 컨셉과 시나리오를 구상하는 과정에서 본인이 어떤 아이디어를 제시하고, 팀의 방향을 잡는 데 어떻게 기여했는지 구체적으로 서술하세요.</p>
+                                <textarea rows="5" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-lg font-semibold text-stone-800">자료 조사</label>
+                                <p class="text-sm text-stone-500 mb-2">쇼츠 내용의 정확성 확보를 위해 본인이 어떤 감염병 정보를 조사하고, 어떤 자료(교과서, 논문, 뉴스 기사 등)를 참고했는지 작성해 주세요.</p>
+                                <textarea rows="5" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="production" class="tab-content">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-lg font-semibold text-stone-800">나의 역할 수행</label>
+                                <p class="text-sm text-stone-500 mb-2">기획 단계에서 맡은 역할(촬영, 편집, 출연 등)을 수행하며 구체적으로 어떤 작업을 진행했는지 서술하세요.</p>
+                                <textarea rows="5" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-lg font-semibold text-stone-800">협업 경험</label>
+                                <p class="text-sm text-stone-500 mb-2">팀원들과 소통하고 협력하는 과정에서 어려웠던 점과 이를 어떻게 해결했는지, 팀의 목표 달성을 위해 어떤 노력을 했는지 서술하세요.</p>
+                                <textarea rows="5" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="reflection" class="tab-content">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-lg font-semibold text-stone-800">배운 점</label>
+                                <p class="text-sm text-stone-500 mb-2">이번 수행평가를 통해 보건간호 지식 외에 새롭게 배우거나 성장했다고 느끼는 점(예: 영상 제작 기술, 협업 능력 등)은 무엇인가요?</p>
+                                <textarea rows="5" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-lg font-semibold text-stone-800">자기 평가 (5점 만점)</label>
+                                <p class="text-sm text-stone-500 mb-2">본인의 역할 수행에 대해 5점 만점으로 평가하고, 그 이유를 간략하게 서술하세요.</p>
+                                <input type="number" min="1" max="5" class="w-20 p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500">
+                                <textarea rows="2" placeholder="평가 이유" class="w-full mt-2 p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Peer Evaluation -->
+            <section id="peer-evaluation" class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-bold text-teal-700 mb-4">2. 동료 평가</h2>
+                <p class="text-stone-600 mb-6">팀원들의 활동을 공정하게 평가해 주세요. 먼저 팀원의 이름을 추가한 후, 각 항목에 대해 슬라이더를 움직여 평가를 진행할 수 있습니다.</p>
+                <div class="flex items-center space-x-2 mb-6">
+                    <input type="text" id="teammate-name-input" placeholder="팀원 이름 입력" class="flex-grow p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500">
+                    <button id="add-teammate-btn" class="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition">추가</button>
+                </div>
+                <div id="peer-evaluation-cards" class="space-y-6"></div>
+            </section>
+
+            <!-- Section 4: Submission and Summary -->
+            <section id="submission-summary" class="text-center">
+                <button id="submit-btn" class="bg-teal-800 text-white font-bold px-8 py-3 rounded-lg hover:bg-teal-900 transition text-lg">포트폴리오 제출하기</button>
+                <div id="summary-section" class="hidden mt-8 bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold text-teal-700 mb-4">제출 완료 및 요약</h2>
+                    <p class="text-stone-600 mb-6">수고하셨습니다! 작성하신 동료 평가 점수 요약은 아래와 같습니다.</p>
+                    <div class="chart-container">
+                        <canvas id="peer-evaluation-chart"></canvas>
+                    </div>
+                    <p id="submission-message" class="mt-4 text-green-700 font-semibold"></p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(item => item.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const target = document.getElementById(tab.dataset.tab);
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    target.classList.add('active');
+                });
+            });
+            
+            tabs.forEach(tab => {
+                tab.style.padding = '8px 16px';
+                tab.style.border = '1px solid transparent';
+                tab.style.borderBottom = 'none';
+                tab.style.borderRadius = '6px 6px 0 0';
+                tab.style.cursor = 'pointer';
+                tab.style.transition = 'all 0.3s';
+            });
+
+            const addTeammateBtn = document.getElementById('add-teammate-btn');
+            const teammateNameInput = document.getElementById('teammate-name-input');
+            const peerEvaluationCards = document.getElementById('peer-evaluation-cards');
+            let teammateCounter = 0;
+
+            addTeammateBtn.addEventListener('click', () => {
+                const name = teammateNameInput.value.trim();
+                if (name) {
+                    teammateCounter++;
+                    const card = createTeammateCard(name, teammateCounter);
+                    peerEvaluationCards.appendChild(card);
+                    teammateNameInput.value = '';
+                }
+            });
+
+            function createTeammateCard(name, id) {
+                const card = document.createElement('div');
+                card.className = 'p-4 border border-stone-200 rounded-lg bg-stone-50';
+                card.dataset.teammateId = id;
+
+                const criteria = [
+                    { name: '참여도', id: 'participation' },
+                    { name: '협력도', id: 'cooperation' },
+                    { name: '책임감', id: 'responsibility' },
+                    { name: '의사소통', id: 'communication' }
+                ];
+
+                let criteriaHtml = criteria.map(c => `
+                    <div class="mb-4">
+                        <label for="${c.id}-${id}" class="block text-md font-medium text-stone-700 mb-2">${c.name}</label>
+                        <div class="relative">
+                            <input type="range" id="${c.id}-${id}" min="1" max="5" value="3" class="w-full h-2 bg-stone-200 rounded-lg appearance-none cursor-pointer" data-criterion="${c.id}">
+                            <span class="slider-value" style="left: 50%;">3점</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <h3 class="text-lg font-bold text-teal-700 mb-4">${name}</h3>
+                    ${criteriaHtml}
+                    <div>
+                        <label for="comment-${id}" class="block text-md font-medium text-stone-700 mb-2">종합 의견</label>
+                        <textarea id="comment-${id}" rows="2" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                    </div>
+                `;
+                
+                card.querySelectorAll('input[type="range"]').forEach(slider => {
+                    slider.addEventListener('input', updateSliderValue);
+                });
+
+                return card;
+            }
+            
+            function updateSliderValue(event) {
+                const slider = event.target;
+                const valueSpan = slider.nextElementSibling;
+                const percent = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+                valueSpan.textContent = `${slider.value}점`;
+                valueSpan.style.left = `calc(${percent}% + (${8 - percent * 0.16}px))`;
+            }
+
+            const submitBtn = document.getElementById('submit-btn');
+            const summarySection = document.getElementById('summary-section');
+            let peerChart = null;
+
+            submitBtn.addEventListener('click', () => {
+                const studentName = document.getElementById('student-name').value;
+                if (!studentName) {
+                    alert('학생 이름을 입력해주세요.');
+                    return;
+                }
+                
+                summarySection.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+                
+                const evaluationData = getPeerEvaluationData();
+                renderChart(evaluationData);
+
+                document.getElementById('submission-message').textContent = `${studentName}님의 포트폴리오가 성공적으로 제출되었습니다.`;
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            });
+
+            function getPeerEvaluationData() {
+                const cards = document.querySelectorAll('#peer-evaluation-cards > div');
+                const data = {
+                    labels: [],
+                    datasets: [{
+                        label: '평균 점수',
+                        data: [],
+                        backgroundColor: 'rgba(15, 118, 110, 0.6)',
+                        borderColor: 'rgba(13, 74, 70, 1)',
+                        borderWidth: 1
+                    }]
+                };
+                
+                const scores = {
+                    participation: [],
+                    cooperation: [],
+                    responsibility: [],
+                    communication: []
+                };
+
+                cards.forEach(card => {
+                    card.querySelectorAll('input[type="range"]').forEach(slider => {
+                        const criterion = slider.dataset.criterion;
+                        scores[criterion].push(parseInt(slider.value));
+                    });
+                });
+                
+                data.labels = ['참여도', '협력도', '책임감', '의사소통'];
+                data.datasets[0].data = [
+                    calculateAverage(scores.participation),
+                    calculateAverage(scores.cooperation),
+                    calculateAverage(scores.responsibility),
+                    calculateAverage(scores.communication)
+                ];
+
+                return data;
+            }
+
+            function calculateAverage(arr) {
+                if (arr.length === 0) return 0;
+                const sum = arr.reduce((a, b) => a + b, 0);
+                return (sum / arr.length).toFixed(1);
+            }
+
+            function renderChart(data) {
+                const ctx = document.getElementById('peer-evaluation-chart').getContext('2d');
+                if (peerChart) {
+                    peerChart.destroy();
+                }
+                peerChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 5,
+                                title: {
+                                    display: true,
+                                    text: '점수 (5점 만점)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: '동료 평가 항목별 평균 점수',
+                                font: {
+                                    size: 18
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.dataset.label}: ${context.raw}점`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
