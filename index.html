@@ -71,7 +71,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <label for="student-name" class="block text-sm font-medium text-stone-700 mb-1">이름</label>
-                        <input type="text" id="student-name" name="studentName" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500">
+                        <input type="text" id="student-name" name="studentName" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" required>
                     </div>
                     <div>
                         <label for="team-name" class="block text-sm font-medium text-stone-700 mb-1">팀명</label>
@@ -175,7 +175,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3AH12ZziHKnqwxTYnLg-o3PpdawGCVyLFQl3TrWjpF5_-bZxGYxUZXNGkLbtZR9TO/exec";
+            // 이 곳에 Apps Script에서 복사한 웹 앱 URL을 붙여넣으세요.
+            // **주의: 따옴표("") 안에 URL을 정확히 넣어야 합니다.**
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZp2o9_Bf30K71iYWbbVHUFjV70ec18ZocpKdYYwdOVTUMg7S6nsMxXdps1SsNh7TB/exec";
 
             const tabs = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
@@ -264,12 +266,21 @@
 
             const submitBtn = document.getElementById('submit-btn');
             const submissionResultSection = document.getElementById('submission-result');
+            const submissionMessage = document.getElementById('submission-message');
             let peerChart = null;
 
             submitBtn.addEventListener('click', async () => {
-                const studentName = document.getElementById('student-name').value;
+                const studentNameInput = document.getElementById('student-name');
+                const studentName = studentNameInput.value.trim();
+                
+                // 필수 입력 항목 검사
                 if (!studentName) {
-                    alert('학생 이름을 입력해주세요.');
+                    submissionMessage.textContent = '❗ 학생 이름을 입력해주세요.';
+                    submissionMessage.classList.remove('text-green-700');
+                    submissionMessage.classList.add('text-red-600');
+                    submissionResultSection.classList.remove('hidden');
+                    // 입력 필드에 포커스
+                    studentNameInput.focus();
                     return;
                 }
                 
@@ -299,6 +310,10 @@
 
                 submitBtn.textContent = '제출 중...';
                 submitBtn.disabled = true;
+                submissionMessage.textContent = '포트폴리오를 제출하고 있습니다...';
+                submissionMessage.classList.remove('text-red-600', 'text-green-700');
+                submissionMessage.classList.add('text-gray-600');
+                submissionResultSection.classList.remove('hidden');
 
                 try {
                     const response = await fetch(SCRIPT_URL, {
@@ -307,15 +322,26 @@
                     });
                     
                     if (response.ok) {
+                        // 제출 완료 메시지 표시
+                        submissionMessage.textContent = `${studentName}님의 포트폴리오가 성공적으로 제출되었습니다.`;
+                        submissionMessage.classList.remove('text-gray-600');
+                        submissionMessage.classList.add('text-green-700');
+                        
+                        // 동료 평가 점수를 기반으로 차트 생성 및 표시
                         const evaluationData = getPeerEvaluationData();
                         renderChart(evaluationData);
-                        document.getElementById('submission-message').textContent = `${studentName}님의 포트폴리오가 성공적으로 제출되었습니다.`;
-                        submissionResultSection.classList.remove('hidden');
+                        
+                        // 요약 섹션 표시
+                        const summarySection = document.getElementById('summary-section');
+                        summarySection.classList.remove('hidden');
+
                     } else {
                         throw new Error('제출 실패');
                     }
                 } catch (error) {
-                    document.getElementById('submission-message').textContent = `제출에 실패했습니다. 다시 시도해 주세요.`;
+                    submissionMessage.textContent = `❗ 제출에 실패했습니다. Apps Script URL을 확인하고 다시 시도해 주세요.`;
+                    submissionMessage.classList.remove('text-green-700');
+                    submissionMessage.classList.add('text-red-600');
                     console.error('Error:', error);
                 } finally {
                     submitBtn.textContent = '포트폴리오 제출하기';
