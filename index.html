@@ -71,15 +71,15 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <label for="student-name" class="block text-sm font-medium text-stone-700 mb-1">이름</label>
-                        <input type="text" id="student-name" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500">
+                        <input type="text" id="student-name" name="studentName" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500">
                     </div>
                     <div>
                         <label for="team-name" class="block text-sm font-medium text-stone-700 mb-1">팀명</label>
-                        <input type="text" id="team-name" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500">
+                        <input type="text" id="team-name" name="teamName" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500">
                     </div>
                     <div>
                         <label for="student-role" class="block text-sm font-medium text-stone-700 mb-1">담당 역할</label>
-                        <input type="text" id="student-role" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="예: 기획, 촬영, 편집 등">
+                        <input type="text" id="student-role" name="studentRole" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="예: 기획, 촬영, 편집 등">
                     </div>
                 </div>
             </section>
@@ -101,12 +101,12 @@
                             <div>
                                 <label class="block text-lg font-semibold text-stone-800">아이디어 및 시나리오 구상</label>
                                 <p class="text-sm text-stone-500 mb-2">우리 팀의 쇼츠 컨셉과 시나리오를 구상하는 과정에서 본인이 어떤 아이디어를 제시하고, 팀의 방향을 잡는 데 어떻게 기여했는지 구체적으로 서술하세요.</p>
-                                <textarea rows="5" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                                <textarea rows="5" name="planningIdea" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
                             </div>
                             <div>
                                 <label class="block text-lg font-semibold text-stone-800">자료 조사</label>
                                 <p class="text-sm text-stone-500 mb-2">쇼츠 내용의 정확성 확보를 위해 본인이 어떤 감염병 정보를 조사하고, 어떤 자료(교과서, 논문, 뉴스 기사 등)를 참고했는지 작성해 주세요.</p>
-                                <textarea rows="5" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                                <textarea rows="5" name="planningResearch" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
                             </div>
                         </div>
                     </div>
@@ -115,12 +115,12 @@
                             <div>
                                 <label class="block text-lg font-semibold text-stone-800">나의 역할 수행</label>
                                 <p class="text-sm text-stone-500 mb-2">기획 단계에서 맡은 역할(촬영, 편집, 출연 등)을 수행하며 구체적으로 어떤 작업을 진행했는지 서술하세요.</p>
-                                <textarea rows="5" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                                <textarea rows="5" name="productionRole" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
                             </div>
                             <div>
                                 <label class="block text-lg font-semibold text-stone-800">협업 경험</label>
                                 <p class="text-sm text-stone-500 mb-2">팀원들과 소통하고 협력하는 과정에서 어려웠던 점과 이를 어떻게 해결했는지, 팀의 목표 달성을 위해 어떤 노력을 했는지 서술하세요.</p>
-                                <textarea rows="5" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                                <textarea rows="5" name="productionCollaboration" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
                             </div>
                         </div>
                     </div>
@@ -129,13 +129,13 @@
                             <div>
                                 <label class="block text-lg font-semibold text-stone-800">배운 점</label>
                                 <p class="text-sm text-stone-500 mb-2">이번 수행평가를 통해 보건간호 지식 외에 새롭게 배우거나 성장했다고 느끼는 점(예: 영상 제작 기술, 협업 능력 등)은 무엇인가요?</p>
-                                <textarea rows="5" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                                <textarea rows="5" name="reflectionLearnings" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
                             </div>
                             <div>
                                 <label class="block text-lg font-semibold text-stone-800">자기 평가 (5점 만점)</label>
                                 <p class="text-sm text-stone-500 mb-2">본인의 역할 수행에 대해 5점 만점으로 평가하고, 그 이유를 간략하게 서술하세요.</p>
-                                <input type="number" min="1" max="5" class="w-20 p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500">
-                                <textarea rows="2" placeholder="평가 이유" class="w-full mt-2 p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                                <input type="number" min="1" max="5" name="reflectionSelfScore" class="w-20 p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500">
+                                <textarea rows="2" name="reflectionSelfReason" placeholder="평가 이유" class="w-full mt-2 p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
                             </div>
                         </div>
                     </div>
@@ -156,13 +156,18 @@
             <!-- Section 4: Submission and Summary -->
             <section id="submission-summary" class="text-center">
                 <button id="submit-btn" class="bg-teal-800 text-white font-bold px-8 py-3 rounded-lg hover:bg-teal-900 transition text-lg">포트폴리오 제출하기</button>
-                <div id="summary-section" class="hidden mt-8 bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-2xl font-bold text-teal-700 mb-4">제출 완료 및 요약</h2>
-                    <p class="text-stone-600 mb-6">수고하셨습니다! 작성하신 동료 평가 점수 요약은 아래와 같습니다.</p>
-                    <div class="chart-container">
-                        <canvas id="peer-evaluation-chart"></canvas>
+                <div id="submission-result" class="hidden mt-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold text-teal-700 mb-4">제출 결과</h2>
+                        <p id="submission-message" class="mt-4 text-green-700 font-semibold"></p>
                     </div>
-                    <p id="submission-message" class="mt-4 text-green-700 font-semibold"></p>
+                    <div id="summary-section" class="mt-8 bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold text-teal-700 mb-4">제출 완료 및 요약</h2>
+                        <p class="text-stone-600 mb-6">수고하셨습니다! 작성하신 동료 평가 점수 요약은 아래와 같습니다.</p>
+                        <div class="chart-container">
+                            <canvas id="peer-evaluation-chart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
@@ -170,6 +175,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZp2o9_Bf30K71iYWbbVHUFjV70ec18ZocpKdYYwdOVTUMg7S6nsMxXdps1SsNh7TB/exec";
+
             const tabs = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
 
@@ -212,6 +219,7 @@
                 const card = document.createElement('div');
                 card.className = 'p-4 border border-stone-200 rounded-lg bg-stone-50';
                 card.dataset.teammateId = id;
+                card.dataset.teammateName = name;
 
                 const criteria = [
                     { name: '참여도', id: 'participation' },
@@ -235,7 +243,7 @@
                     ${criteriaHtml}
                     <div>
                         <label for="comment-${id}" class="block text-md font-medium text-stone-700 mb-2">종합 의견</label>
-                        <textarea id="comment-${id}" rows="2" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                        <textarea id="comment-${id}" rows="2" name="teammateComment-${id}" class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
                     </div>
                 `;
                 
@@ -255,24 +263,65 @@
             }
 
             const submitBtn = document.getElementById('submit-btn');
-            const summarySection = document.getElementById('summary-section');
+            const submissionResultSection = document.getElementById('submission-result');
             let peerChart = null;
 
-            submitBtn.addEventListener('click', () => {
+            submitBtn.addEventListener('click', async () => {
                 const studentName = document.getElementById('student-name').value;
                 if (!studentName) {
                     alert('학생 이름을 입력해주세요.');
                     return;
                 }
                 
-                summarySection.classList.remove('hidden');
-                submitBtn.classList.add('hidden');
+                const formData = new FormData();
+                formData.append('timestamp', new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }));
                 
-                const evaluationData = getPeerEvaluationData();
-                renderChart(evaluationData);
+                document.querySelectorAll('input, textarea').forEach(input => {
+                    if (input.name) {
+                        formData.append(input.name, input.value);
+                    }
+                });
 
-                document.getElementById('submission-message').textContent = `${studentName}님의 포트폴리오가 성공적으로 제출되었습니다.`;
-                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                const peerEvaluationCards = document.querySelectorAll('#peer-evaluation-cards > div');
+                peerEvaluationCards.forEach(card => {
+                    const teammateId = card.dataset.teammateId;
+                    const teammateName = card.dataset.teammateName;
+                    formData.append(`teammateName-${teammateId}`, teammateName);
+                    card.querySelectorAll('input[type="range"]').forEach(slider => {
+                        const criterion = slider.dataset.criterion;
+                        formData.append(`teammate-${teammateId}-${criterion}`, slider.value);
+                    });
+                    const comment = card.querySelector(`[name="teammateComment-${teammateId}"]`);
+                    if (comment) {
+                        formData.append(`teammateComment-${teammateId}`, comment.value);
+                    }
+                });
+
+                submitBtn.textContent = '제출 중...';
+                submitBtn.disabled = true;
+
+                try {
+                    const response = await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (response.ok) {
+                        const evaluationData = getPeerEvaluationData();
+                        renderChart(evaluationData);
+                        document.getElementById('submission-message').textContent = `${studentName}님의 포트폴리오가 성공적으로 제출되었습니다.`;
+                        submissionResultSection.classList.remove('hidden');
+                    } else {
+                        throw new Error('제출 실패');
+                    }
+                } catch (error) {
+                    document.getElementById('submission-message').textContent = `제출에 실패했습니다. 다시 시도해 주세요.`;
+                    console.error('Error:', error);
+                } finally {
+                    submitBtn.textContent = '포트폴리오 제출하기';
+                    submitBtn.disabled = false;
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                }
             });
 
             function getPeerEvaluationData() {
